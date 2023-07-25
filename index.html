@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GERADOR DE DATAS | Baug. Systems</title>
+    <link rel="icon" href="img/logo.png">
+
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400&display=swap');
+    
+            input[type=number]::-webkit-inner-spin-button, 
+            input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        /* Modificações scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #999999; 
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: #f6f7f7;
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            overflow: hidden;
+        }
+
+        .container{
+            max-width: 90%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            margin: 0 auto;
+            box-shadow: rgba(85, 85, 85, 0.3) 0px 19px 38px, rgba(88, 88, 88, 0.22) 0px 15px 12px;        
+        }
+        
+        .data-container{
+            background-color: rgb(255, 230, 230);
+            width: 35rem;
+            max-height: 22.5rem;
+            margin-bottom:1rem;
+            overflow-x:hidden;
+            overflow-y:none;
+            align-items: center;
+        }
+        
+        table, th, td {
+            border:1px solid black;
+            text-align: center;
+        }   
+            
+        #table{
+            display: none;
+        }
+        
+        #id{
+            width: 5rem;
+        }
+        
+        #data{
+            width: 30rem;
+        }
+
+/* User-interaction */
+
+        .info-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .quantityContainter{
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35rem;
+            height: 4rem;
+            background-color: rgb(255, 230, 230);
+            gap: 1rem
+        }
+        
+        .quantityContainter span{
+            font-size: 1.2rem;
+        }
+        
+        .quantityContainter input{
+            min-width: 3rem;
+            height: 3rem;
+            font-size: 1.8rem;
+            text-align: center;
+            overflow-x: scroll;
+            outline: none;
+            font-weight: 100;
+        }
+
+        .buttonContainer{
+            width: 20rem;
+            height: 5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+       
+        #button, #re-doButton{
+            width: 90%;
+            height: 75%;
+            border: none;
+            cursor: pointer;
+            transition: .5s;
+            border-radius:10px;
+            background-color: #c50007;
+            color:white;
+            font-size: 1.5rem;
+            font-family: 'M PLUS Rounded 1c', sans-serif;;
+        }
+
+        #button:hover, #re-doButton:hover{
+            background-color: #8d0005;
+        }
+
+        #re-doButton{
+            display: none;
+        }
+
+        .title{
+            width: 100%;
+            font-size: 1rem;
+            font-weight: 400;
+            text-decoration:underline;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .title span{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap:.2rem;
+        }
+
+        .title h6{
+            margin-top:.25rem;
+            font-size: .5rem
+        }
+
+        #clipboardButton{
+            width: 8.5rem;
+            height: 2.2rem;
+            margin-right: .5rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid rgb(29, 29, 29);
+            border-radius: .4rem;
+            cursor: pointer;
+            background-color: #ffbbbb;
+            color: rgb(29, 29, 29);
+            transition: 1.2s;
+        }
+
+        #clipboardButton:hover{
+            background-color: #c50007;
+            color: white;
+            
+        }
+
+        #clipboard{
+            width: 1rem;
+            height: auto;
+            color: white;
+            margin-right: .2rem;
+            margin-bottom: .1rem;
+            margin-left: .4rem
+        }
+
+        .upper-side-wrapper{
+            display: flex;
+            flex-direction: row;
+        }
+
+        #copyright{
+            display: none;
+            margin-left: .8rem
+        }
+
+        .msgContainer{
+            width: 20rem;
+            height: 3.5rem;
+            display: flex;
+            flex-direction: row;
+            background-color: #54ff5c;
+            position: absolute;
+            right: 3%;
+            top: -10rem;
+            border-radius: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .showMsg{
+            animation: showMsg 7s;
+        }
+
+        @keyframes showMsg {
+            0%{
+                top: -10rem
+            }
+
+            20%{
+                top: 1rem
+            }
+
+            100%{
+                top:1rem;
+                opacity: 0;
+                display: none;
+            }
+        }
+
+        #msgImg{
+            width: 2rem;
+            height: min-content;
+
+        }
+
+        /* MEDIAS QUERIES */
+
+        @media (max-width: 660px){
+            .quantityContainter{
+                width: 18rem;
+            }
+            .quantityContainter input{
+                margin-right: 1rem;
+                gap: 0
+            }
+            .quantityContainter span{
+                font-size:1rem;
+                margin-left: 1rem;
+            }
+
+            .data-container{
+                width: 22rem;
+            }
+        }
+
+        @media (max-width: 393px) {
+            .data-container{
+                width: 17.5rem;
+            }
+            
+            .quantityContainter{
+                width: 15rem;
+            }
+
+            #spanQuantity{
+                font-size: .8rem;
+            }
+            
+            #button, #re-doButton{
+                width: 70%;
+                height: 55%;
+                font-size: 1.1rem
+            }
+        }
+
+    </style>
+</head>
+
+<body>    
+    <div class="container" id="container">
+
+        <div class="msgContainer" id="msgContainer">
+            <img src="img/clipboard sucess.png" id="msgImg">
+            <p id="msgP">Copiado para a área de transferência</p>
+        </div>
+
+        <div class="title">
+            <span>baug's date generator <h6>V1.0.0</h6></span>
+        </div>
+
+        <div class="data-container" id="data-container">
+            <table id="table">
+
+                <tr>
+                    <th id="id">id</th>
+                    <th id="data">data</th>
+                </tr>
+            
+            </table>
+        </div>
+
+        <div class="info-container">
+            
+            <div class="upper-side-wrapper">
+                <div class="quantityContainter">
+                    <p id="copyright">Copyright Baug Systems © 2023</p>
+                    <span id="spanQuantity">Insira a quantidade de datas a serem geradas:</span>
+                    <input type="number" id="dataQuantity" min="1" max="20">
+                    <button id="clipboardButton" onclick="handleClipboard()"><img src="img/clipboard.png" alt="copy to clipboard" id="clipboard">Copy to Clipboard</button>
+                </div>
+            </div>
+
+            <div class="buttonContainer">
+                <button id="button" onclick="handleClick()">GERAR DATAS</button>
+                <button id="re-doButton" onclick="redo()">RE-DO</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
